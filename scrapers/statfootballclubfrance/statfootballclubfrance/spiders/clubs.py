@@ -17,9 +17,13 @@ class ClubsSpider(scrapy.Spider):
                 tds = tabclubrow.xpath("./td/text()").getall()
                 clubname = tabclubrow.xpath("./td/a/text()").getall()
                 clubref = tabclubrow.xpath("./td/a/@href").getall()
-                
+                try:
+                    district=tds[1]
+                except IndexError:
+                    district="Paris"
                 yield {
                     "ville": tds[0],
+                    "district": district,
                     "club": clubname[0],
                     "ref": clubref[0],
                     "region": current_region
